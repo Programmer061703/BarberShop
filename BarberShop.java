@@ -8,8 +8,6 @@ public class BarberShop {
     private static Semaphore waitingRoom;
     private static Semaphore barberSemaphore;
     private static  Semaphore customerSemaphore;
-
-
     public static void main(String[] args) {
        //Default values
 
@@ -37,8 +35,8 @@ public class BarberShop {
 
        // Initialize/declare variables incuding object of class type Customer, mutexes, and semaphores
        waitingRoom = new Semaphore(numWaitingChairs);
-       barberSemaphore = new Semaphore(numBarbers);
-       customerSemaphore = new Semaphore(numCustomers);
+       barberSemaphore = new Semaphore(0);
+       customerSemaphore = new Semaphore(0);
 
        //Time info
         long startTime = System.currentTimeMillis();
@@ -70,18 +68,10 @@ public class BarberShop {
 
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        System.out.println("Total time: " + totalTime + " milliseconds");
-
-
-       
-       
-        
+        System.out.println("Total time: " + totalTime + " milliseconds");    
     }
        
 }
-       
-       
-
      class Customer implements Runnable {
 
       //Defines variables
@@ -123,46 +113,28 @@ public class BarberShop {
           
 
         } catch(InterruptedException e){
-
           e.printStackTrace();
-        }
-
-       
-        
+        }  
       }
       private void getBarberChair(){
         try{
-        
-
           synchronized(this){
             waitNum--;
           }
           Mwait.release();
           Sbarber.acquire();
           System.out.println("Customer " + id + " is getting a haircut");
-          Thread.sleep(generator.nextInt(1000));
+          Thread.sleep(generator.nextInt(5000));
           System.out.println("Customer " + id + " is done getting a haircut");
           Mbarber.release();
-          
-          
-         
-
         }
         catch(InterruptedException e){
           e.printStackTrace();
         }
-        
-
       }
     private void exit(){
-      
         Sbarber.release();
         System.out.println("Customer " + id + " is leaving the barber shop");
-       
-          
-        
-       
-
         }
         public void run() {
             // Sleep random time before entering barber shop
@@ -177,11 +149,7 @@ public class BarberShop {
             exit();
 
             System.out.println("Customer " + id + " has left the barber shop");
-        }
-
-    
-        
-        
+        }   
     }
 
 
