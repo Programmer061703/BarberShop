@@ -7,7 +7,8 @@ public class BarberShop {
 
     private static Semaphore waitingRoom;
     private static Semaphore barberSemaphore;
-    private static  Semaphore customerSemaphore;
+    private static Semaphore waitingRoomMutex;
+    private static Semaphore barberMutex;
     public static void main(String[] args) {
        //Default values
 
@@ -35,8 +36,9 @@ public class BarberShop {
 
        // Initialize/declare variables incuding object of class type Customer, mutexes, and semaphores
        waitingRoom = new Semaphore(numWaitingChairs);
-       barberSemaphore = new Semaphore(0);
-       customerSemaphore = new Semaphore(0);
+       barberSemaphore = new Semaphore(numBarbers);
+       waitingRoomMutex = new Semaphore(1);
+       barberMutex = new Semaphore(1);
 
        //Time info
         long startTime = System.currentTimeMillis();
@@ -44,7 +46,7 @@ public class BarberShop {
         List<Thread> threads = new ArrayList<Thread>();
 
         for(int i = 0; i < numCustomers; i++){
-            Customer customer = new Customer(i, waitingRoom, barberSemaphore, customerSemaphore, barberSemaphore);
+            Customer customer = new Customer(i, waitingRoom, barberSemaphore, waitingRoomMutex, barberMutex);
             Thread thread = new Thread(customer);
             threads.add(thread);
             customer.setThread(thread);
@@ -104,10 +106,12 @@ public class BarberShop {
       private void getWait(){
 
         try{
-          Mwait.acquire();
+          
           if(Swait.tryAcquire()){
+            Mwait.acquire();
             waitNum++;
             System.out.println("Customer " + id + " is waiting in the waiting room");
+            System.out.println("\tNumb waiting: " + waitNum);
           }
           else{
             System.out.println("Customer " + id + " is leaving the barber shop because the waiting room is full");
@@ -127,27 +131,24 @@ public class BarberShop {
       }
       private void getBarberChair(){
         try{
-          
+
+          Sbarber.acquire();
+          Swait.release();
+
           Mbarber.acquire();
-
-          if(numInBarber >=5){
-            Mbarber.release();
-            Swait.release();
-            Thread.sleep(generator.nextInt(5000));
-            Swait.acquire();
-            Mbarber.acquire();
-
-          }
-
+          Mwait.acquire();
           numInBarber++;
           waitNum--;
+
           //Print out num in barber and waitnum
-          System.out.println("Numb waiting: " + waitNum);
-          System.out.println("Numb getting haircut: " + numInBarber);
-          System.out.println("Customer " + id + " is getting a haircut");
+          System.out.println("\t\tCustomer " + id + " is getting a haircut");
+          System.out.println("\t\tNumb getting haircut: " + numInBarber);
           
-          Mbarber.release();
-          Swait.release();
+
+          Mwait.release();
+          Mbarber.release();   
+          
+          
           Thread.sleep(generator.nextInt(5000));
          
         }
@@ -155,7 +156,7 @@ public class BarberShop {
           e.printStackTrace();
         }
         finally{
-          Mbarber.release();
+          Sbarber.release();
         }
       }
     private void exit(){
@@ -164,7 +165,7 @@ public class BarberShop {
         Sbarber.release();
         Mwait.release(); 
 
-        System.out.println("Customer " + id + " is leaving the barber shop");
+        System.out.println("\t\t\tCustomer " + id + " is leaving the barber shop");
         }
         public void run() {
             // Sleep random time before entering barber shop
