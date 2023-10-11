@@ -102,38 +102,68 @@ public class BarberShop {
 
 
       private void getWait(){
+
         try{
-          Swait.acquire();
-          synchronized(this){
+          Mwait.acquire();
+          if(Swait.tryAcquire()){
             waitNum++;
+            System.out.println("Customer " + id + " is waiting in the waiting room");
           }
-          System.out.println("Customer " + id + " is waiting in the waiting room");
-          System.out.println("Number of customers waiting: " + waitNum);
-          Swait.release();
+          else{
+            System.out.println("Customer " + id + " is leaving the barber shop because the waiting room is full");
+            thread.interrupt();
+            return;
+          }
+          
+          
           
 
         } catch(InterruptedException e){
           e.printStackTrace();
         }  
+        finally{
+          Mwait.release();
+        }
       }
       private void getBarberChair(){
         try{
-          synchronized(this){
-            waitNum--;
+          
+          Mbarber.acquire();
+
+          if(numInBarber >=5){
+            Mbarber.release();
+            Swait.release();
+            Thread.sleep(generator.nextInt(5000));
+            Swait.acquire();
+            Mbarber.acquire();
+
           }
-          Mwait.release();
-          Sbarber.acquire();
+
+          numInBarber++;
+          waitNum--;
+          //Print out num in barber and waitnum
+          System.out.println("Numb waiting: " + waitNum);
+          System.out.println("Numb getting haircut: " + numInBarber);
           System.out.println("Customer " + id + " is getting a haircut");
-          Thread.sleep(generator.nextInt(5000));
-          System.out.println("Customer " + id + " is done getting a haircut");
+          
           Mbarber.release();
+          Swait.release();
+          Thread.sleep(generator.nextInt(5000));
+         
         }
         catch(InterruptedException e){
           e.printStackTrace();
         }
+        finally{
+          Mbarber.release();
+        }
       }
     private void exit(){
+        Sbarber.acquireUninterruptibly();
+        numInBarber--;
         Sbarber.release();
+        Mwait.release(); 
+
         System.out.println("Customer " + id + " is leaving the barber shop");
         }
         public void run() {
