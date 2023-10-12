@@ -160,7 +160,7 @@ public class BarberShop {
           Mbarber.release();   
           
           
-          Thread.sleep(generator.nextInt(5000));
+          Thread.sleep(generator.nextInt(1000));
          
         }
         catch(InterruptedException e){
