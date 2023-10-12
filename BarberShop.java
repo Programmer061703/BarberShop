@@ -15,7 +15,7 @@ public class BarberShop {
 
        int sleepTime = 20;
        int numBarbers = 5;
-       final Random generator = new Random();
+       
 
        
 
