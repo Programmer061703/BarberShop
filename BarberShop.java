@@ -9,6 +9,7 @@ public class BarberShop {
     private static Semaphore barberSemaphore;
     private static Semaphore waitingRoomMutex;
     private static Semaphore barberMutex;
+    private static int elapsedTime;
     public static void main(String[] args) {
        //Default values
 
@@ -46,11 +47,21 @@ public class BarberShop {
         List<Thread> threads = new ArrayList<Thread>();
 
         for(int i = 0; i < numCustomers; i++){
+          elapsedTime =(int) (System.currentTimeMillis() - startTime);
+          if(elapsedTime < sleepTime){
+            //Sleep random time before entering barber shop
+            
             Customer customer = new Customer(i, waitingRoom, barberSemaphore, waitingRoomMutex, barberMutex);
             Thread thread = new Thread(customer);
             threads.add(thread);
             customer.setThread(thread);
             thread.start();
+          }
+          else{
+            System.out.println("Shop is closed. No new customers allowed.");
+            break;
+          } 
+          
           
         }
         //Join threads

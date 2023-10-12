@@ -1,0 +1,102 @@
+Script started on 2023-10-12 13:53:46-0500
+]0;brw020@turing: ~/OS/BarberShop[01;32mbrw020@turing[00m:[01;34m~/OS/BarberShop[00m$ javac BarberShop.java
+]0;brw020@turing: ~/OS/BarberShop[01;32mbrw020@turing[00m:[01;34m~/OS/BarberShop[00m$ java BarberShop 20 5
+Sleep time: 20 Number of Barbers: 5
+
+Customer 1 is waiting in the waiting room
+Numb waiting: 1
+Customer 1 is getting a haircut
+Numb getting haircut: 1
+Customer 10 is waiting in the waiting room
+Numb waiting: 1
+Customer 6 is waiting in the waiting room
+Numb waiting: 2
+Customer 5 is waiting in the waiting room
+Numb waiting: 3
+Customer 10 is getting a haircut
+Numb getting haircut: 2
+Customer 6 is getting a haircut
+Numb getting haircut: 3
+Customer 5 is getting a haircut
+Numb getting haircut: 4
+Customer 14 is waiting in the waiting room
+Numb waiting: 1
+Customer 14 is getting a haircut
+Numb getting haircut: 5
+Customer 3 is waiting in the waiting room
+Numb waiting: 1
+Customer 2 is waiting in the waiting room
+Numb waiting: 2
+Customer 3 is getting a haircut
+Numb getting haircut: 5
+Customer 14 is leaving the barber shop
+Customer 14 has left the barber shop
+Customer 9 is waiting in the waiting room
+Numb waiting: 2
+Customer 7 is waiting in the waiting room
+Numb waiting: 3
+Customer 4 is waiting in the waiting room
+Numb waiting: 4
+Customer 0 is waiting in the waiting room
+Numb waiting: 5
+Customer 11 is waiting in the waiting room
+Numb waiting: 6
+Customer 13 is waiting in the waiting room
+Numb waiting: 7
+Customer 8 is waiting in the waiting room
+Numb waiting: 8
+Customer 12 is waiting in the waiting room
+Numb waiting: 9
+Customer 6 is leaving the barber shop
+Customer 6 has left the barber shop
+Customer 2 is getting a haircut
+Numb getting haircut: 5
+Customer 2 is leaving the barber shop
+Customer 9 is getting a haircut
+Numb getting haircut: 5
+Customer 2 has left the barber shop
+Customer 3 is leaving the barber shop
+Customer 7 is getting a haircut
+Numb getting haircut: 5
+Customer 3 has left the barber shop
+Customer 5 is leaving the barber shop
+Customer 5 has left the barber shop
+Customer 4 is getting a haircut
+Numb getting haircut: 5
+Customer 10 is leaving the barber shop
+Customer 0 is getting a haircut
+Numb getting haircut: 5
+Customer 10 has left the barber shop
+Customer 4 is leaving the barber shop
+Customer 11 is getting a haircut
+Numb getting haircut: 5
+Customer 4 has left the barber shop
+Customer 13 is getting a haircut
+Numb getting haircut: 5
+Customer 0 is leaving the barber shop
+Customer 0 has left the barber shop
+Customer 1 is leaving the barber shop
+Customer 1 has left the barber shop
+Customer 8 is getting a haircut
+Numb getting haircut: 5
+Customer 7 is leaving the barber shop
+Customer 7 has left the barber shop
+Customer 12 is getting a haircut
+Numb getting haircut: 5
+Customer 12 is leaving the barber shop
+Customer 12 has left the barber shop
+Customer 8 is leaving the barber shop
+Customer 8 has left the barber shop
+Customer 9 is leaving the barber shop
+Customer 9 has left the barber shop
+Customer 13 is leaving the barber shop
+Customer 13 has left the barber shop
+Customer 11 is leaving the barber shop
+Customer 11 has left the barber shop
+All customers have been serviced
+Total time: 8562 milliseconds
+
+]0;brw020@turing: ~/OS/BarberShop[01;32mbrw020@turing[00m:[01;34m~/OS/BarberShop[00m$ exit
+exit
+
+Script done on 2023-10-12 13:54:20-0500
