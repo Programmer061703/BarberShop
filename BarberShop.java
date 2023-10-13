@@ -15,7 +15,7 @@ public class BarberShop {
     public static void main(String[] args) {
        //Default values
 
-       int sleepTime = 20000;
+       int sleepTime = 20000; // Time in miliseconds 
        int numBarbers = 5;
        
 
@@ -23,6 +23,7 @@ public class BarberShop {
 
        if(args.length == 2){
         sleepTime = Integer.parseInt(args[0]);
+        sleepTime = sleepTime * 1000;
         numBarbers = Integer.parseInt(args[1]);
         System.out.println("Sleep time: " + sleepTime + " Number of Barbers: " + numBarbers);
         System.out.println("");
