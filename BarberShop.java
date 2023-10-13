@@ -1,5 +1,7 @@
 import java.util.concurrent.*;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ public class BarberShop {
     public static void main(String[] args) {
        //Default values
 
-       int sleepTime = 20;
+       int sleepTime = 20000;
        int numBarbers = 5;
        
 
@@ -45,11 +47,23 @@ public class BarberShop {
         long startTime = System.currentTimeMillis();
 
         List<Thread> threads = new ArrayList<Thread>();
+        
+        
 
         for(int i = 0; i < numCustomers; i++){
           elapsedTime =(int) (System.currentTimeMillis() - startTime);
+
+          //Please Note that this will make it so it only displays 1 customer as waiting 
+          //This is becuase the arrival time and the cutting time are going be on average the same, and there are 5 barbers
+          //But as it is required for customers to arrive at random time between 0 and 1 second this is the best way to do it
           if(elapsedTime < sleepTime){
             //Sleep random time before entering barber shop
+            try{
+              Thread.sleep(new Random().nextInt(1000));
+            }
+            catch(InterruptedException e){
+              e.printStackTrace();
+            }
             
             Customer customer = new Customer(i, waitingRoom, barberSemaphore, waitingRoomMutex, barberMutex);
             Thread thread = new Thread(customer);
@@ -82,6 +96,8 @@ public class BarberShop {
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println("Total time: " + totalTime + " milliseconds");    
+
+        
     }
        
 }
@@ -180,12 +196,8 @@ public class BarberShop {
         }
         public void run() {
             // Sleep random time before entering barber shop
-
-            try {
-                Thread.sleep(generator.nextInt(1000));
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+  
+           
             getWait();
             getBarberChair(); // Don't forget to leave the waiting room IF waiting room and barber chair is full
             exit();
